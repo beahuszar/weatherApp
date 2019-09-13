@@ -10,21 +10,23 @@ class App extends React.Component {
         super(props);
         
         // we don't yet know the value, but will later
-        this.state = { lat: null}
-    };
+        this.state = { lat: null };
 
-    // Render method is a must for React to be able to return the jsx
-    render() {
-        /* it needs 2 arguments to be able to return the users location:
+         /* it needs 2 arguments to be able to return the users location:
         - success callback, which gets called when all OK
         - failure callback, when the location cannot be tracked
         */
-        window.navigator.geolocation.getCurrentPosition(
-            (position) => console.log(position),
+       window.navigator.geolocation.getCurrentPosition(
+            (position) => {
+                this.setState({ lat: position.coords.latitude });
+            },
             (err) => console.log(err)
         );
-        
-        return <div>Latitude: </div>
+    };
+
+    // Render method is a must for React to be able to return the jsx
+    render() {     
+        return <div>Latitude: {this.state.lat} </div>
     };
 };
 
