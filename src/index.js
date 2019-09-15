@@ -10,7 +10,7 @@ class App extends React.Component {
         super(props);
         
         // we don't yet know the value, but will later
-        this.state = { lat: null };
+        this.state = { lat: null , errorMessage: '' };
 
          /* it needs 2 arguments to be able to return the users location:
         - success callback, which gets called when all OK
@@ -20,13 +20,19 @@ class App extends React.Component {
             (position) => {
                 this.setState({ lat: position.coords.latitude });
             },
-            (err) => console.log(err)
+            (err) => {
+                this.setState({ errorMessage: err.message })
+            }
         );
     };
 
     // Render method is a must for React to be able to return the jsx
     render() {     
-        return <div>Latitude: {this.state.lat} </div>
+        return <div>
+            Latitude: {this.state.lat}
+            <br />
+            Error: {this.state.errorMessage} 
+            </div>
     };
 };
 
