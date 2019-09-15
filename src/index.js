@@ -11,20 +11,19 @@ class App extends React.Component {
         
         // we don't yet know the value, but will later
         this.state = { lat: null , errorMessage: '' };
-
-         /* it needs 2 arguments to be able to return the users location:
-        - success callback, which gets called when all OK
-        - failure callback, when the location cannot be tracked
-        */
-       window.navigator.geolocation.getCurrentPosition(
-            (position) => {
-                this.setState({ lat: position.coords.latitude });
-            },
-            (err) => {
-                this.setState({ errorMessage: err.message })
-            }
-        );
     };
+
+    componentDidMount(){
+        /* 
+            it needs 2 arguments to be able to return the users location:
+            - success callback, which gets called when all OK
+            - failure callback, when the location cannot be tracked
+        */
+        window.navigator.geolocation.getCurrentPosition(
+            position => this.setState({ lat: position.coords.latitude }),
+            err => this.setState({ errorMessage: err.message })
+        );
+    }
 
     // Render method is a must for React to be able to return the jsx
     render() {
