@@ -18,10 +18,9 @@ class App extends React.Component {
             position => this.setState({ lat: position.coords.latitude }),
             err => this.setState({ errorMessage: err.message })
         );
-    }
+    };
 
-    // Render method is a must for React to be able to return the jsx
-    render() {
+    renderContent() {
         if (this.state.errorMessage && !this.state.lat) {
             return <div>Error: {this.state.errorMessage} </div>;
         }
@@ -31,6 +30,12 @@ class App extends React.Component {
         }
 
         return <Spinner text="Fetching geolocation..."/>
+    };
+
+    // Render method is a must for React to be able to return the jsx
+    // There should be no render logic, it must be outsourced into a helper method
+    render() {
+        return <div className="border red">{ this.renderContent() }</div>;
     };
 };
 
