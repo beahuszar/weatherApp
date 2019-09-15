@@ -1,4 +1,6 @@
+import './SeasonDisplay.css'; // Webpack will detect this and put the appropriate link tag in the html where it is needed
 import React from 'react';
+
 const getSeason = (lat, month) => {
     if (month > 2 && month < 9) {
         return lat > 0 ? 'summer' : 'winter';
@@ -23,10 +25,10 @@ const SeasonDisplay = (props) => {
     const {text, iconName} = SeasonConfig[season]; //ES2015
 
     return (
-        <div>
-            <i className={`${iconName} icon`} />
+        <div className={`season-display ${season}`}>
+            <i className={`icon-left massive ${iconName} icon`} />
             <h1>{text}</h1>
-            <i className={`${iconName} icon`} />
+            <i className={`icon-right massive ${iconName} icon`} />
         </div>
     );
 };
