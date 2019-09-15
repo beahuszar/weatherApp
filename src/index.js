@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import SeasonDisplay from './SeasonDisplay'
 
 // Class based component
 class App extends React.Component {
     // This is identical to the constructor, Babel will translate it to that
     state = { lat: null , errorMessage: '' };
-    
+
     componentDidMount(){
         /* 
             it needs 2 arguments to be able to return the users location:
@@ -25,7 +26,7 @@ class App extends React.Component {
         }
         
         if (!this.state.errorMessage && this.state.lat) {
-            return <div>Latitude: {this.state.lat} </div>
+            return <SeasonDisplay lat={this.state.lat} />
         }
 
         return <div>Loading...</div>
