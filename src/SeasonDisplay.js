@@ -7,12 +7,27 @@ const getSeason = (lat, month) => {
     }
 };
 
+const SeasonConfig = {
+    summer: {
+        text: 'Lets hit the beach',
+        iconName: 'sun' // from semanticUI
+    },
+    winter: {
+        text: 'Burr, it is chilly',
+        iconName: 'snowflake' // from semanticUI
+    }
+};
+
 const SeasonDisplay = (props) => {
     const season = getSeason(props.lat, new Date().getMonth());
-    const text = season === 'winter' ? 'Burr, it is chilly' : 'Lets hit the beach';
+    const {text, iconName} = SeasonConfig[season]; //ES2015
 
     return (
-        <div><h1>{text}</h1></div>
+        <div>
+            <i className={`${iconName} icon`} />
+            <h1>{text}</h1>
+            <i className={`${iconName} icon`} />
+        </div>
     );
 };
 
