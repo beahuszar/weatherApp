@@ -3,16 +3,9 @@ import ReactDOM from 'react-dom';
 
 // Class based component
 class App extends React.Component {
-    // Constructor is called 1st when a JS class is used
-    // This is one good place where state can be initialised
-    constructor(props) {
-        // React.Component constructor
-        super(props);
-        
-        // we don't yet know the value, but will later
-        this.state = { lat: null , errorMessage: '' };
-    };
-
+    // This is identical to the constructor, Babel will translate it to that
+    state = { lat: null , errorMessage: '' };
+    
     componentDidMount(){
         /* 
             it needs 2 arguments to be able to return the users location:
