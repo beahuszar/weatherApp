@@ -1,45 +1,29 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import SeasonDisplay from './SeasonDisplay'
-import Spinner from './Spinner'
+import SeasonDisplay from './SeasonDisplay';
+import Spinner from './Spinner';
 
-// Class based component
-class App extends React.Component {
-    // This is identical to the constructor, Babel will translate it to that
-    state = { lat: null , errorMessage: '' };
+const App = () => {
+  const [lat, setLat] = useState(null);
+  const [errorMessage, setErrorMessage] = useState('');
 
-    componentDidMount(){
-        /* 
-            it needs 2 arguments to be able to return the users location:
-            - success callback, which gets called when all OK
-            - failure callback, when the location cannot be tracked
-        */
-        window.navigator.geolocation.getCurrentPosition(
-            position => this.setState({ lat: position.coords.latitude }),
-            err => this.setState({ errorMessage: err.message })
-        );
-    };
+  useEffect(() => {
+    window.navigator.geolocation.getCurrentPosition(
+      position => setLat(position.coords.latitude),
+      err => setErrorMessage(err.message)
+    );
+  }, []);
 
-    renderContent() {
-        if (this.state.errorMessage && !this.state.lat) {
-            return <div>Error: {this.state.errorMessage} </div>;
-        }
-        
-        if (!this.state.errorMessage && this.state.lat) {
-            return <SeasonDisplay lat={this.state.lat} />
-        }
+  let content;
+  if (errorMessage) {
+    content = <div>Error: {errorMessage}</div>;
+  } else if (lat) {
+    content = <SeasonDisplay lat={lat} />;
+  } else {
+    content = <Spinner text="Fetching geolocation..." />;
+  }
 
-        return <Spinner text="Fetching geolocation..."/>
-    };
-
-    // Render method is a must for React to be able to return the jsx
-    // There should be no render logic, it must be outsourced into a helper method
-    render() {
-        return <div className="border red">{ this.renderContent() }</div>;
-    };
+  return <div className="border red">{content}</div>;
 };
 
-ReactDOM.render(
-    <App />,
-    document.querySelector('#root')
-);
+ReactDOM.render(<App />, document.querySelector('#root'));
